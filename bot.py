@@ -4,8 +4,9 @@ from __future__ import annotations
 
 import asyncio
 import logging
-import re
 import random
+import re
+import requests
 from typing import Dict, List, Tuple
 
 from telegram import Update
@@ -91,7 +92,12 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                 dict(cookies),
             )
             results.append((url, title, page_url))
-        except (GalleryProcessingError, TelegraphError, RuntimeError) as exc:
+        except (
+            GalleryProcessingError,
+            TelegraphError,
+            RuntimeError,
+            requests.exceptions.RequestException,
+        ) as exc:
             LOGGER.exception("Failed to process %s", url)
             errors.append(f"❌ {url}\n{exc}")
 
