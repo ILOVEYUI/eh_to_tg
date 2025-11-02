@@ -1,0 +1,14 @@
+{
+  "telegram_bot_token": "YOUR_TELEGRAM_BOT_TOKEN",
+  "telegraph": {
+    "access_token": "YOUR_TELEGRAPH_ACCESS_TOKEN",
+    "author_name": "可选的作者昵称",
+    "author_url": "https://example.com"
+  },
+  "ehentai_cookies": {
+    "ipb_member_id": "YOUR_IPB_MEMBER_ID",
+    "ipb_pass_hash": "YOUR_IPB_PASS_HASH",
+    "igneous": "YOUR_IGNEOUS",
+    "sk": "YOUR_SK"
+  }
+}
