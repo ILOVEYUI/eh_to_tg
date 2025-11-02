@@ -1,7 +1,10 @@
 {
   "telegram_bot_token": "YOUR_TELEGRAM_BOT_TOKEN",
   "telegraph": {
-    "access_token": "YOUR_TELEGRAPH_ACCESS_TOKEN",
+    "access_tokens": [
+      "YOUR_TELEGRAPH_ACCESS_TOKEN",
+      "OPTIONAL_SECOND_ACCESS_TOKEN"
+    ],
     "author_name": "可选的作者昵称",
     "author_url": "https://example.com"
   },

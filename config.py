@@ -6,7 +6,7 @@ import json
 import os
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Dict, List, Optional, Tuple
 
 CONFIG_PATH_ENV = "BOT_CONFIG_PATH"
 
@@ -15,7 +15,7 @@ CONFIG_PATH_ENV = "BOT_CONFIG_PATH"
 class TelegraphSettings:
     """Telegraph API credentials and optional author metadata."""
 
-    access_token: str
+    access_tokens: Tuple[str, ...]
     author_name: Optional[str] = None
     author_url: Optional[str] = None
 
@@ -58,10 +58,25 @@ def load_config(path: Optional[str] = None) -> BotConfig:
     if not isinstance(telegraph_data, dict):
         raise ConfigError("缺少 telegraph 配置")
 
-    try:
-        telegraph_token = str(telegraph_data["access_token"])
-    except KeyError as exc:
-        raise ConfigError("缺少字段：telegraph.access_token") from exc
+    tokens_data = telegraph_data.get("access_tokens")
+    tokens: List[str] = []
+    if isinstance(tokens_data, list):
+        for token in tokens_data:
+            token_str = str(token).strip()
+            if token_str:
+                tokens.append(token_str)
+        if not tokens:
+            raise ConfigError("telegraph.access_tokens 不能为空")
+    elif tokens_data is not None:
+        raise ConfigError("telegraph.access_tokens 必须为数组")
+    else:
+        try:
+            single_token = str(telegraph_data["access_token"])
+        except KeyError as exc:
+            raise ConfigError("缺少字段：telegraph.access_tokens 或 telegraph.access_token") from exc
+        if not single_token:
+            raise ConfigError("telegraph.access_token 不能为空")
+        tokens = [single_token]
 
     telegraph_author_name = telegraph_data.get("author_name")
     telegraph_author_url = telegraph_data.get("author_url")
@@ -75,7 +90,7 @@ def load_config(path: Optional[str] = None) -> BotConfig:
     return BotConfig(
         telegram_bot_token=telegram_token,
         telegraph=TelegraphSettings(
-            access_token=telegraph_token,
+            access_tokens=tuple(tokens),
             author_name=str(telegraph_author_name) if telegraph_author_name else None,
             author_url=str(telegraph_author_url) if telegraph_author_url else None,
         ),

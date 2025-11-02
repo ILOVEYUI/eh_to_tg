@@ -24,7 +24,7 @@
    ```
 
    * `telegram_bot_token`：Telegram 机器人 token。
-   * `telegraph.access_token`：Telegraph access token，可通过官方接口 [`createAccount`](https://telegra.ph/api#createAccount) 获取。
+   * `telegraph.access_tokens`：Telegraph access token 数组，可通过官方接口 [`createAccount`](https://telegra.ph/api#createAccount) 获取，可填写多条以便轮换使用。
    * `telegraph.author_name` / `telegraph.author_url`：可选的作者信息。
    * `ehentai_cookies`：访问 E-Hentai/ExHentai 所需的 cookie（如 `ipb_member_id`、`ipb_pass_hash`、`igneous`、`sk` 等）。
 
