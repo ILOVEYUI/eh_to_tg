@@ -9,7 +9,7 @@ import re
 import time
 from dataclasses import dataclass
 from tempfile import NamedTemporaryFile
-from typing import Iterable, List, Optional, Tuple
+from typing import Iterable, List, Mapping, Optional, Tuple
 from urllib.parse import urljoin, urlparse
 
 import requests
@@ -48,11 +48,14 @@ class EhentaiGalleryDownloader:
         self,
         delay_range: Tuple[float, float] = (1.5, 3.5),
         session: Optional[requests.Session] = None,
+        cookies: Optional[Mapping[str, str]] = None,
     ) -> None:
         if delay_range[0] < 0 or delay_range[1] < delay_range[0]:
             raise ValueError("Invalid delay range")
         self.delay_range = delay_range
         self.session = session or requests.Session()
+        if cookies:
+            self.session.cookies.update(cookies)
 
     def _random_delay(self) -> None:
         delay = random.uniform(*self.delay_range)

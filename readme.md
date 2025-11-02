@@ -17,21 +17,22 @@
    pip install -r requirements.txt
    ```
 
-2. 创建 Telegram 机器人并获取 `TELEGRAM_BOT_TOKEN`。
+2. 复制配置文件模板并填写你的凭据：
 
-3. 在 Telegraph 上创建 access token，可通过官方接口 [`createAccount`](https://telegra.ph/api#createAccount) 获取，并设置环境变量 `TELEGRAPH_ACCESS_TOKEN`。
+   ```bash
+   cp config.example.json config.json
+   ```
 
-可选环境变量：
+   * `telegram_bot_token`：Telegram 机器人 token。
+   * `telegraph.access_token`：Telegraph access token，可通过官方接口 [`createAccount`](https://telegra.ph/api#createAccount) 获取。
+   * `telegraph.author_name` / `telegraph.author_url`：可选的作者信息。
+   * `ehentai_cookies`：访问 E-Hentai/ExHentai 所需的 cookie（如 `ipb_member_id`、`ipb_pass_hash`、`igneous`、`sk` 等）。
 
-* `TELEGRAPH_AUTHOR_NAME` – Telegraph 页面显示的作者名称。
-* `TELEGRAPH_AUTHOR_URL` – Telegraph 页面作者链接。
+   如需放置在其他目录，可设置环境变量 `BOT_CONFIG_PATH` 指向配置文件路径。
 
 ## 运行
 
 ```bash
-export TELEGRAM_BOT_TOKEN="<your-telegram-token>"
-export TELEGRAPH_ACCESS_TOKEN="<your-telegraph-token>"
-
 python bot.py
 ```
 
